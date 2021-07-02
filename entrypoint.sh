@@ -1,3 +1,3 @@
 #!/bin/sh
 java -version
-java -jar app.jar
+java $BOOTAPP_OPTS -jar app.jar
