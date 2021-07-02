@@ -1,5 +1,7 @@
 package africa.airtel.devops.k8svalidator.controller;
 
+<<<<<<< HEAD
+=======
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
