@@ -17,6 +17,8 @@
 		<java.version>11</java.version>
 		<kubernetes-client.version>3.1.12</kubernetes-client.version>
 		<verson.json-simple>1.1.1</verson.json-simple>
+		<docker.image.prefix>guneetginnigarg</docker.image.prefix>
+		<version.dockerfile>1.4.13</version.dockerfile>
 	</properties>
 
 	<dependencies>
@@ -76,6 +78,40 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>${version.dockerfile}</version>
+				<dependencies>
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>javax.activation-api</artifactId>
+						<version>1.2.0</version>
+						<scope>compile</scope>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>build</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>tag</goal>
+							<goal>push</goal>
+						</goals>
+						<configuration>
+							<tag>${project.version}</tag>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.coveo</groupId>
