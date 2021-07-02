@@ -18,12 +18,7 @@
 		<kubernetes-client.version>3.1.12</kubernetes-client.version>
 		<verson.json-simple>1.1.1</verson.json-simple>
 	</properties>
-	<scm>
-		<connection>scm:git:ssh://git@bitbucket.africa.airtel.itm:7999/am/{{repo-name}}.git</connection>
-		<url>ssh://git@bitbucket.africa.airtel.itm:7999/am/{{repo-name}}.git</url>
-		<developerConnection>scm:git:ssh://git@bitbucket.africa.airtel.itm:7999/am/{{repo-name}}.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -89,22 +84,4 @@
 		</plugins>
 	</build>
 
-<!-- 	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories> -->
 </project>
