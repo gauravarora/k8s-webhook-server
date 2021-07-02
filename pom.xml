@@ -19,6 +19,7 @@
 		<verson.json-simple>1.1.1</verson.json-simple>
 		<docker.image.prefix>guneetginnigarg</docker.image.prefix>
 		<version.dockerfile>1.4.13</version.dockerfile>
+		<version.spring.boot>2.5.2</version.spring.boot>
 	</properties>
 
 	<dependencies>
@@ -78,6 +79,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${version.spring.boot}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.spotify</groupId>
@@ -94,7 +104,7 @@
 				<executions>
 					<execution>
 						<id>build</id>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>build</goal>
 							<goal>tag</goal>
@@ -109,7 +119,7 @@
 					<repository>${docker.image.prefix}/${project.artifactId}</repository>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<buildArgs>
-						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+						<JAR_FILE>target/${project.artifactId}-${project.version}.jar</JAR_FILE>
 					</buildArgs>
 				</configuration>
 			</plugin>
