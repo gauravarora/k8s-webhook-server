@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1beta1")
+@RequestMapping("/v1")
 public class V1Controller {
 
   private final ValidatorFactory validatorFactory;
