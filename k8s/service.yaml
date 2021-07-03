@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-webhook-server
+  labels:
+    app: k8s-webhook-server
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: k8s-webhook-server

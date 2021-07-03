@@ -1,5 +1,7 @@
 package africa.airtel.devops.k8svalidator.validator;
 
+import africa.airtel.devops.k8svalidator.model.ValidatorResponse;
+import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.Quantity;
 import io.fabric8.kubernetes.api.model.ResourceRequirements;
 import io.fabric8.kubernetes.api.model.StatusBuilder;
@@ -16,20 +18,20 @@ import org.springframework.stereotype.Component;
 public class DeploymentValidator implements Validator{
 
   @Override
-  public void validate(AdmissionReview request, AdmissionResponse response) {
-    Deployment deployment = (Deployment) request.getRequest().getObject();
+  public ValidatorResponse validate(KubernetesResource kubernetesResource) {
+    Deployment deployment = (Deployment) kubernetesResource;
+    ValidatorResponse response = ValidatorResponse.builder().allowed(false).build();
     ResourceRequirements resources = deployment.getSpec().getTemplate().getSpec().getContainers().get(0)
         .getResources();
-    response.setAllowed(false);
     if(Objects.isNull(resources)) {
       response.setStatus(new StatusBuilder().withMessage("Resources section is required").withCode(400).build());
-      return;
+      return response;
     } else if(Objects.isNull(resources.getRequests())) {
       response.setStatus(new StatusBuilder().withMessage("Resource request section is required").withCode(400).build());
-      return;
+      return response;
     } else if(Objects.isNull(resources.getRequests().get("cpu"))) {
       response.setStatus(new StatusBuilder().withMessage("CPU request is required").withCode(400).build());
-      return;
+      return response;
     }
     Quantity quantity = resources.getRequests().get("cpu");
     log.info("CPU request: {}, {}", quantity.getAmount(), quantity.getFormat());
@@ -42,5 +44,6 @@ public class DeploymentValidator implements Validator{
     } else {
       response.setAllowed(true);
     }
+    return response;
   }
 }

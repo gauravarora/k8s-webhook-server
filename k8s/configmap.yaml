@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-webhook-server-config
+data:
+  application.properties: |
+    trust.store=classpath:keystore/cert.p12
+    trust.store.password=
+    server.ssl.key-store-type=PKCS12
+    server.ssl.key-store=classpath:keystore/cert.p12
+    server.ssl.key-store-password=
+    server.ssl.key-alias=k8s-webhook-server
+    server.ssl.enabled=true

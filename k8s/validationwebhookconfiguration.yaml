@@ -1,0 +1,26 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: k8s-webhook-server
+  labels:
+    app: k8s-webhook-server
+webhooks:
+  - name: kubernetes.docker.internal
+    failurePolicy: Fail
+    clientConfig:
+      service:
+        name: k8s-webhook-server
+        path: "/v1/validate"
+        port: 8080
+      caBundle: ${CA_BUNDLE}
+    rules:
+      - operations:
+          - CREATE
+          - UPDATE
+        apiGroups:
+          - "*"
+        apiVersions:
+          - "*"
+        resources:
+          - podsecuritypolicies
+          - deployments

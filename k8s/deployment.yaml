@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-webhook-server
+  name: k8s-webhook-server
+spec:
+  selector:
+    matchLabels:
+      app: k8s-webhook-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: k8s-webhook-server
+    spec:
+      containers:
+        - name: k8s-webhook-server
+          image: guneetginnigarg/k8s-webhook-server:0.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+          volumeMounts:
+            - mountPath: /app/
+              name: application-config
+              readOnly: true
+            - mountPath: /keystore/
+              name: keystore
+              readOnly: true
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: k8s-webhook-server-config
+          name: application-config
+        - name: keystore
+          secret:
+            secretName: k8s-webhook-server
